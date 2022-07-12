@@ -1,0 +1,192 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Watcher.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Watcher.Views.MainWindow"
+        Title="{Binding ApplicationName}"
+		MinWidth="800"
+		MinHeight="450">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Grid RowDefinitions="Auto, *, Auto">
+
+		<!-- Top Bar -->
+		<Grid Grid.Row="0" Background="Orange" Height="40" ColumnDefinitions="Auto, Auto, * Auto">
+			<Rectangle Grid.Column="0" Fill="Orange" Width="40"></Rectangle>
+			<Rectangle Grid.Column="1" Fill="Orange" Width="40"></Rectangle>
+			<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+				<TextBlock FontWeight="Black" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<TextBlock Text="{Binding WorkerInformation}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</StackPanel>
+			
+			<Rectangle Grid.Column="3" Fill="Orange" Width="40"></Rectangle>
+			
+		</Grid>
+
+		<!-- Main Area-->
+		<Grid Grid.Row="1" ColumnDefinitions="3*, *" Margin="2" Background="Transparent">
+
+			<!-- Working Area-->
+			<Grid Grid.Column="0" ColumnDefinitions="*, 5, *" IsVisible="{Binding Data.HasActiveWorker}" Background="Transparent">
+
+				<!-- Watcher Area -->
+				<Grid Grid.Column="0" RowDefinitions="35, *, 40" Background="Transparent">
+
+					<!-- Working Directory -->
+					<Grid Grid.Row="0" ColumnDefinitions="70, *, 40" Height="20">
+
+						
+						<TextBlock Margin="5, 0, 5, 0" Grid.Column="0">Watcher:</TextBlock>
+
+						<!-- Working Directory Box -->
+						<TextBox x:Name="WatcherDirectory" KeyUp="WatcherDirectoryKeyUp" Text="{Binding Data.WatcherDirectory}" Grid.Column="1" Margin="5, 0"></TextBox>
+						
+						<!-- Working Directory Navigate Back -->
+						<Button x:Name="WatcherDirectoryBack" Grid.Column="3" Height="30" Command="{Binding WatcherDirectoryBack}">..</Button>	
+					
+					</Grid>
+
+					<!-- Working Directory Tree -->
+					<ListBox x:Name="WatcherDirectoryTree" Grid.Row="1" Items="{Binding Data.WatcherDirectoryTree}"
+							 SelectedItem="{Binding Data.SelectedWatcherNode}" DoubleTapped="SelectWatcherNode">
+					</ListBox>
+					
+					<!-- Actions -->
+					<StackPanel Grid.Row="2">
+						<Button Margin="5" HorizontalAlignment="Right" Command="{Binding TransferToWorker}">Transfer To</Button>
+					</StackPanel>
+					
+				</Grid>
+				
+				<GridSplitter Grid.Column="1" Background="Black"
+							  ResizeDirection="Columns"/>
+
+				<!-- Worker Area -->
+				<Grid Grid.Column="2" RowDefinitions="35, *, 40" Background="Transparent">
+
+					<!-- Working Directory -->
+					<Grid Grid.Row="0" ColumnDefinitions="70, *, 40" Height="20">
+
+
+						<TextBlock Margin="5, 0, 5, 0" Grid.Column="0">Worker:</TextBlock>
+
+						<!-- Working Directory Box -->
+						<TextBox x:Name="WorkerDirectory" KeyUp="WorkerDirectoryKeyUp" Text="{Binding Data.WorkerDirectory}" Grid.Column="1" Margin="5, 0"></TextBox>
+						
+						<!-- Working Directory Navigate Back -->
+						<Button x:Name="WorkerDirectoryBack" Grid.Column="3" Height="30" Command="{Binding WorkerDirectoryBack}">..</Button>	
+					
+					</Grid>
+					
+					<!-- Working Directory Tree -->
+					<ListBox x:Name="WorkerDirectoryTree" Grid.Row="1" Items="{Binding Data.WorkerDirectoryTree}" 
+							 SelectedItem="{Binding Data.SelectedWorkerNode}" DoubleTapped="SelectWorkerNode">
+					</ListBox>
+
+					<!-- Actions -->
+					<StackPanel Grid.Row="2">
+						<Button Margin="5" HorizontalAlignment="Right" Command="{Binding TransferToWatcher}">Transfer From</Button>
+					</StackPanel>
+					
+				</Grid>
+				
+			</Grid>
+
+			<!-- Workers Meta Area-->
+			<Grid Grid.Column="1" RowDefinitions="2*, *, 40" Margin="5">
+
+				<!-- Workers Ids -->
+				<ListBox Grid.Row="0" Items="{Binding WorkerIds}" SelectedItem="{Binding WorkerId}">
+					
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Border CornerRadius="4" Padding="0, 2, 0, 0" Height="20">
+								<TextBlock Text="{Binding}"/>
+							</Border>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+
+					<ListBox.Styles>
+						
+						<Style Selector="ListBoxItem">
+							<Setter Property="Height" Value="22"/>
+						</Style>
+						
+					</ListBox.Styles>
+					
+				</ListBox>
+
+				<!-- Worker Metadata Area -->
+				<Border Grid.Row="1" BorderBrush="#100" BorderThickness=".25">
+					
+					<StackPanel Grid.Row="1" IsVisible="{Binding Data.HasWorker}">
+					
+						<TextBlock FontWeight="Black" Text="{Binding Data.SelectedWorker.Name}"></TextBlock>
+						
+						<SplitView Height="5"></SplitView>
+							
+						<Grid ColumnDefinitions="20, *">
+								
+							<TextBlock Grid.Column="0" FontWeight="Normal" Margin="2, 10" Text="ID:"></TextBlock>
+							<TextBox Grid.Column="1" Height="10" Text="{Binding Data.SelectedWorker.UUID}" IsReadOnly="True"></TextBox>
+						
+						</Grid>
+
+						<StackPanel Orientation="Horizontal">
+							
+							<TextBlock FontWeight="Normal" Margin="2, 0" Text="IP: "></TextBlock>
+							<TextBlock FontWeight="Black" Text="{Binding Data.SelectedWorker.Address} "></TextBlock>
+							
+						</StackPanel>
+						
+						<SplitView Height="35"></SplitView>
+							
+						<StackPanel Orientation="Horizontal">
+							
+							<TextBlock FontWeight="Normal" Text="Status: "></TextBlock>
+							<TextBlock FontWeight="Black" Text="{Binding Data.SelectedWorker.DisplayStatus} "></TextBlock>
+							
+						</StackPanel>
+
+					</StackPanel>
+					
+				</Border>
+
+				<StackPanel Grid.Row="2" Margin="0, 5, 0, 0" Orientation="Horizontal" Width="125">
+
+					<Button FontFamily="15">Refresh</Button>
+					<Button FontFamily="15" HorizontalAlignment="Right" IsEnabled="{Binding Data.CanConnect}" Command="{Binding Connect}">Connect</Button>
+				
+				</StackPanel>
+
+			</Grid>
+		</Grid>
+
+		<!-- Bottom Bar-->
+		<Border Grid.Row="2" BorderBrush="Orange" BorderThickness="2" Background="Orange">
+			<Grid Margin="5" ColumnDefinitions="Auto, *, Auto" Height="20" Background="Orange">
+
+				<StackPanel Grid.Column="0" Orientation="Horizontal" IsVisible="{Binding Data.IsTransfering}">
+					<Label Margin="0, -2, 0, 0" >Transfering File</Label>
+					<ProgressBar Value="10" Height="15"></ProgressBar>
+				</StackPanel>
+
+				<StackPanel Grid.Column="1" Orientation="Horizontal">
+
+				</StackPanel>
+
+				<StackPanel Grid.Column="2" Orientation="Horizontal">
+					<TextBlock Margin="0, 2, 0, 0" Text="{Binding ConnectionState}"></TextBlock>
+				</StackPanel>
+
+			</Grid>
+		</Border>
+		
+	</Grid>
+
+</Window>
