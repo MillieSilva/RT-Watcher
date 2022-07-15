@@ -16,7 +16,7 @@ using MessageBox.Avalonia.DTO;
 using MessageBox.Avalonia.Enums;
 using MessageBox.Avalonia.Models;
 using MessageBox.Avalonia;
-using Avalonia.Interactivity;
+
 
 namespace Watcher.ViewModels
 {
