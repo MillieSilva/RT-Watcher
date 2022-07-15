@@ -33,15 +33,15 @@ jobs:
       uses: Nuget/setup-nuget@v1.0.5
     
     - name: Restore nuget packages
-      working-directory: Watcher/
+      working-directory: ./Watcher
       run: nuget restore Watcher.sln
     
     - name: Restore dependencies
-      working-directory: Watcher/
+      working-directory: ./Watcher
       run: |
         dotnet restore
     
     - name: Build
-      working-directory: Watcher/
+      working-directory: ./Watcher
       run: dotnet build --no-restore
       
