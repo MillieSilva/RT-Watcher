@@ -15,7 +15,7 @@ jobs:
     - name: Checkout DeskLib repository
     - uses: actions/checkout@v3
       with:
-        ref: ${GITHUB_REPOSITORY%/*}/RT-DeskLib
+        repository: ${{ github.repository%/* }}/RT-DeskLib
 
     - name: Make Watcher directory and go to it
       run: mkdir Watcher/ && cd Watcher/
