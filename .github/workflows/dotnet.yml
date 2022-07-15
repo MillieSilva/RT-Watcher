@@ -17,10 +17,16 @@ jobs:
         repository: MillieSilva/RT-DeskLib
         ref: main
         ssh-key: ${{ secrets.DESKLIB_KEY }}
-        path: ../Library
 
     - uses: actions/checkout@v3
-
+      with:
+        repository: MillieSIlva/RT-Watcher
+        ref: main
+        path: Watcher
+    
+    - name: Go to Watcher directory
+      run: cd Watcher
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
