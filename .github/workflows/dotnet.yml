@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Checkout DeskLib repository
     - uses: actions/checkout@v3
-      ref: ${GITHUB_REPOSITORY_OWNER}/RT-DeskLib
+      ref: ${GITHUB_REPOSITORY%/*}/RT-DeskLib
 
     - name: Make Watcher directory and go to it
       run: mkdir Watcher/ && cd Watcher/
