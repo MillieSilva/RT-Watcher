@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main", "development" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: MillieSilva/RT-DeskLib
+        ref: main
+        ssh-key: ${{ secrets.DESKLIB_KEY }}
+
+    - uses: actions/checkout@v3
+      with:
+        repository: MillieSilva/RT-Watcher
+        ref: main
+        path: Watcher
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    
+    - name: Setup Nuget
+      uses: Nuget/setup-nuget@v1.0.5
+    
+    - name: Restore nuget packages
+      working-directory: ./Watcher
+      run: |
+        ls
+        nuget restore Watcher.sln
+    
+    - name: Restore dependencies
+      working-directory: ./Watcher
+      run: |
+        dotnet restore
+    
+    - name: Build
+      working-directory: ./Watcher
+      run: dotnet build --no-restore
+      

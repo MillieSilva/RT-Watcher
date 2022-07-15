@@ -24,7 +24,7 @@ namespace Watcher.Models
 
         public string? UUID => Data.UUID.ToString();
 
-        public string? Name;
+        public string? Name = "";
         public string? Address => Data.Public_IPV4[0];
 
         //
