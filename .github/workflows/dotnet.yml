@@ -16,7 +16,7 @@ jobs:
       with:
         repository: MillieSilva/RT-DeskLib
         ref: main
-        ssh-key: ${{DESKLIB_KEY}}
+        ssh-key: ${{ secrets.DESKLIB_KEY }}
 
     - name: Make Watcher directory and go to it
       run: mkdir Watcher/ && cd Watcher/
