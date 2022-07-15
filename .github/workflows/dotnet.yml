@@ -31,10 +31,18 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+    
+    - name: Setup Nuget
+      uses: Nuget/setup-nuget@v1.0.5
+    
+    - name: List Dir
+      run: ls
+    
+    - name: Restore nuget packages
+      run: nuget restore Watcher.sln
+    
     - name: Restore dependencies
       run: |
-        dotnet clean Watcher.sln --configuration Release
-        dotnet nuget locals all --clear
         dotnet restore
     
     - name: Build
