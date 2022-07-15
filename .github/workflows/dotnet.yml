@@ -17,7 +17,8 @@ jobs:
         repository: MillieSilva/RT-DeskLib
         ref: main
         ssh-key: ${{ secrets.DESKLIB_KEY }}
-
+        path: Library
+    
     - uses: actions/checkout@v3
       with:
         repository: MillieSilva/RT-Watcher
@@ -29,20 +30,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     
-    - name: Setup Nuget
-      uses: Nuget/setup-nuget@v1.0.5
-    
-    - name: Restore nuget packages
-      working-directory: ./Watcher
-      run: |
-        ls
-        nuget restore Watcher.sln
-    
     - name: Restore dependencies
       working-directory: ./Watcher
-      run: |
-        ls
-        dotnet restore
+      run: dotnet restore
     
     - name: Build
       working-directory: ./Watcher
