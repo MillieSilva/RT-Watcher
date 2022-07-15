@@ -41,6 +41,7 @@ jobs:
     - name: Restore dependencies
       working-directory: ./Watcher
       run: |
+        ls
         dotnet restore
     
     - name: Build
