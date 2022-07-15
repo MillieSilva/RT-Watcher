@@ -17,7 +17,10 @@ jobs:
         repository: MillieSilva/RT-DeskLib
         ref: main
         ssh-key: ${{ secrets.DESKLIB_KEY }}
-
+    
+    - name: Loca
+      run: pws && ls
+    
     - uses: actions/checkout@v3
       with:
         repository: MillieSilva/RT-Watcher
