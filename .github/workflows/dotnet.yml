@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Clone DeskLib repository
-      run: git clone https://github.com/${{ inputs.repository_owner }}/RT-DeskLib.git
+      run: git clone https://github.com/MillieSilva/RT-DeskLib.git
 
     - name: Make Watcher directory and go to it
       run: mkdir Watcher/ && cd Watcher/
