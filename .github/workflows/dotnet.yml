@@ -35,6 +35,7 @@ jobs:
     - name: Restore nuget packages
       working-directory: ./Watcher
       run: |
+        cwd
         ls
         nuget restore Watcher.sln
     
