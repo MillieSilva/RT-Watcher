@@ -30,13 +30,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
     
-    - name: Setup Nuget
-      uses: Nuget/setup-nuget@v1.0.5
-    
-    - name: Restore nuget packages
-      working-directory: ./Watcher
-      run: nuget restore Watcher.sln
-    
     - name: Restore dependencies
       working-directory: ./Watcher
       run: dotnet restore
