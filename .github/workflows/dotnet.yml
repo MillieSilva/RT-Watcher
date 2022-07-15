@@ -20,18 +20,9 @@ jobs:
 
     - uses: actions/checkout@v3
       with:
-        repository: MillieSIlva/RT-Watcher
+        repository: MillieSilva/RT-Watcher
         ref: main
         path: Watcher
-    
-    - name: List Dir
-      run: ls
-    
-    - name: Go to Watcher directory
-      run: cd Watcher
-    
-    - name: List Dir
-      run: ls
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -41,17 +32,16 @@ jobs:
     - name: Setup Nuget
       uses: Nuget/setup-nuget@v1.0.5
     
-    - name: List Dir
-      run: ls
-    
     - name: Restore nuget packages
+      working-directory: Watcher/
       run: nuget restore Watcher.sln
     
     - name: Restore dependencies
+      working-directory: Watcher/
       run: |
         dotnet restore
     
     - name: Build
+      working-directory: Watcher/
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      
