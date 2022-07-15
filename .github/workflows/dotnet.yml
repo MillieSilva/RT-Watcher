@@ -34,7 +34,9 @@ jobs:
     
     - name: Restore nuget packages
       working-directory: ./Watcher
-      run: nuget restore Watcher.sln
+      run: |
+        ls
+        nuget restore Watcher.sln
     
     - name: Restore dependencies
       working-directory: ./Watcher
