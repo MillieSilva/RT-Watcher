@@ -33,10 +33,11 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: |
+        dotnet clean Watcher.sln --configuration Release
         dotnet nuget locals all --clear
         dotnet restore
     
     - name: Build
-      run: dotnet build
+      run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
