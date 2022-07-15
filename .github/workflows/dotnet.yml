@@ -19,7 +19,7 @@ jobs:
         ssh-key: ${{ secrets.DESKLIB_KEY }}
     
     - name: Loca
-      run: pws && ls
+      run: pwd && ls
     
     - uses: actions/checkout@v3
       with:
