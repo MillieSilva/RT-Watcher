@@ -12,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout DeskLib repository
     - uses: actions/checkout@v3
       with:
-        repository: ${{ github.repository%/* }}/RT-DeskLib
+        repository: MillieSilva/RT-DeskLib
 
     - name: Make Watcher directory and go to it
       run: mkdir Watcher/ && cd Watcher/
