@@ -24,8 +24,14 @@ jobs:
         ref: main
         path: Watcher
     
+    - name: List Dir
+      run: ls
+    
     - name: Go to Watcher directory
       run: cd Watcher
+    
+    - name: List Dir
+      run: ls
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
