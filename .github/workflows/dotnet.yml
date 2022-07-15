@@ -12,8 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Clone DeskLib repository
-      run: git clone https://github.com/MillieSilva/RT-DeskLib.git
+    - name: Checkout DeskLib repository
+    - uses: actions/checkout@v3
+      ref: ${GITHUB_REPOSITORY_OWNER}/RT-DeskLib
 
     - name: Make Watcher directory and go to it
       run: mkdir Watcher/ && cd Watcher/
