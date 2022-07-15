@@ -17,6 +17,7 @@ jobs:
         repository: MillieSilva/RT-DeskLib
         ref: main
         ssh-key: ${{ secrets.DESKLIB_KEY }}
+        path: Library
     
     - name: Loca
       run: pwd && ls
