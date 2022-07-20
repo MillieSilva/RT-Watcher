@@ -50,7 +50,7 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.architecture }} Release
+        name: watcher.${{ matrix.architecture }}.release
         path: .\Watcher\bin\Release\net6.0\${{ matrix.architecture }}\publish
 
 

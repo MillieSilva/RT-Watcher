@@ -1,5 +1,6 @@
 ﻿// System Imports
 using System.Collections.ObjectModel;
+using System.Linq;
 
 // Application Imports
 
@@ -25,7 +26,7 @@ namespace Watcher.Models
         public string? UUID => Data.UUID.ToString();
 
         public string? Name = "";
-        public string? Address => Data.Public_IPV4[0];
+        public string? Address => Data.Public_IPV4.Last();
 
         //
 
