@@ -44,8 +44,8 @@ jobs:
 
     - name: Build Publish
       working-directory: ./Watcher
-      run: dotnet publish -c Release -r ${{ matrix.architecture }} --self-contained true -p:PublishSingleFile=true
-      #/p:UseAppHost=true
+      run: dotnet publish -c Release -r ${{ matrix.architecture }} --self-contained=true -p:UseAppHost=true -p:PublishSingleFile=true
+      #-p:PublishReadyToRun=true
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
