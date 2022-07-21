@@ -4,12 +4,20 @@ on:
   push:
     branches: [ "main", "development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
 
 jobs:
+
   build:
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        architecture: [win-x64, linux-x64]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: Watcher.sln
 
     steps:
     - uses: actions/checkout@v3
@@ -18,23 +26,31 @@ jobs:
         ref: main
         ssh-key: ${{ secrets.DESKLIB_KEY }}
         path: Library
-    
+
     - uses: actions/checkout@v3
       with:
         repository: MillieSilva/RT-Watcher
         ref: main
         path: Watcher
-    
-    - name: Setup .NET
+
+    - name: Install .NET Core
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
-    
+
     - name: Restore dependencies
       working-directory: ./Watcher
       run: dotnet restore
-    
-    - name: Build
+
+    - name: Build Publish
       working-directory: ./Watcher
-      run: dotnet build --no-restore
-      
+      run: dotnet publish Watcher.csproj -c Release -r ${{ matrix.architecture }} --self-contained=true -p:UseAppHost=true -p:PublishSingleFile=true
+      #-p:PublishReadyToRun=true -p:UseAppHost=true
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: watcher.${{ matrix.architecture }}.release
+        path: .\Watcher\bin\Release\net6.0\${{ matrix.architecture }}\publish
+
+
